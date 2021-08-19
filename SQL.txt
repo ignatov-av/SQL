@@ -1,0 +1,169 @@
+Найдите номер модели, скорость и размер жесткого диска для всех ПК стоимостью менее 500 дол. Вывести: model, speed и hd:
+
+SELECT DISTINCT model, speed, hd
+FROM PC
+WHERE price < 500
+
+
+========
+
+
+Найдите производителей принтеров. Вывести: maker:
+
+SELECT DISTINCT maker FROM Product
+WHERE type = 'printer'
+
+
+=======
+
+
+Найдите номер модели, объем памяти и размеры экранов ПК-блокнотов, цена которых превышает 1000 дол.:
+
+SELECT DISTINCT model, ram, screen
+FROM Laptop
+WHERE price > 1000
+
+
+========
+
+
+
+Найдите все записи таблицы Printer для цветных принтеров:
+
+SELECT * 
+FROM Printer
+WHERE color= 'y'
+ORDER BY color
+
+
+=======
+
+
+Найдите номер модели, скорость и размер жесткого диска ПК, имеющих 12x или 24x CD и цену менее 600 дол.:
+
+SElECT model, speed, hd
+FROM PC
+WHERE ( cd = '12x' or cd = '24x') AND price < 600
+
+
+=======
+
+
+Для каждого производителя, выпускающего ПК-блокноты c объёмом жесткого диска не менее 10 Гбайт, найти скорости таких ПК-блокнотов. Вывод: производитель, скорость:
+
+SELECT DISTINCT Product.maker, Laptop.speed
+FROM Product INNER JOIN Laptop
+ON Product.model=Laptop.model
+WHERE hd >= 10
+
+
+=======
+
+
+Найдите среднюю скорость ПК:
+
+SELECT AVG(speed) 
+FROM PC
+
+
+=======
+
+
+Найдите среднюю скорость ПК-блокнотов, цена которых превышает 1000 дол:
+
+SELECT AVG(SPEED) 
+FROM Laptop
+WHERE price > 1000
+
+
+=======
+
+
+Найдите производителя, выпускающего ПК, но не ПК-блокноты:
+
+SELECT maker FROM Product
+WHERE type='PC'
+EXCEPT
+SELECT maker FRom Product 
+WHERE type='Laptop'
+
+
+=======
+
+
+Найдите среднюю скорость ПК, выпущенных производителем A:
+
+SELECT AVG(speed) 
+FROM PC JOIN Product 
+ON Product.model=PC.model
+WHERE maker ='A'
+ORDER BY AVG(speed)
+
+
+=======
+
+
+Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker:
+
+SELECT DISTINCT maker FROM Product
+JOIN PC ON Product.model=PC.model
+WHERE speed >= 450
+
+
+=======
+
+
+Выведите идентификаторы товаров (поле good) из таблицы Payments, стоимость которых больше 2000 единиц. Стоимость товара хранится в поле unit_price.
+
+SELECT good FROM Payments
+WHERE unit_price > 2000
+
+
+========
+
+
+Выведите имена (поле member_name) членов семьи из таблицы FamilyMembers, чей статус (поле status) равен "father".
+
+SELECT member_name FROM FamilyMembers
+WHERE status ="father"
+
+
+========
+
+
+Выведите имя (поле member_name) и дату рождения (поле birthday) членов семьи из таблицы FamilyMembers, чей статус (поле status) равен "father" или "mother".
+
+SELECT member_name, birthday FROM FamilyMembers
+WHERE status ="father" OR status="mother"
+
+
+========
+
+
+Выведите резервации комнат (поля room_id, start_date, end_date) из таблицы Reservations, у которых итоговая стоимость аренды (поле total) находится в промежутке от 500 до 1200 включительно.
+
+SELECT room_id, start_date, end_date FROM Reservations
+WHERE total BETWEEN 500 AND 1200 
+
+
+========
+
+
+Объедините таблицы Class и Student_in_class с помощью внутреннего соединения по полям Class.id и Student_in_class.class. Выведите название класса (поле Class.name) и идентификатор ученика (поле Student_in_class.student).
+
+SELECT Class.name, Student_in_class.student FROM Class
+JOIN Student_in_class ON Class.id = Student_in_class.class
+
+
+========
+
+
+Дополните запрос из предыдущего задания, добавив ещё одно внутреннее соединение с таблицей Student. Объедините по полям Student_in_class.student и Student.id и вместо идентификатора ученика выведите его имя (поле first_name).
+
+SELECT Class.name, first_name FROM Class 
+JOIN Student_in_class ON Class.id = Student_in_class.class
+JOIN Student ON Student_in_class.student = Student.id
+
+
+========
+
